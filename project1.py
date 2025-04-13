@@ -1,4 +1,6 @@
 from datetime import date, datetime
+from multiprocessing import Value
+from pyexpat import model
 from flask import Flask, render_template, request, redirect, url_for, session, flash, Response, send_file
 from fpdf import FPDF
 import io
@@ -2909,7 +2911,7 @@ def adddeletedtyre(id, model):
                 data5 = cursor.fetchone()
                 print('data5')
                 cursor.execute("select tyremodel.model_id from tyremodel,model where tsize_id=%s and carname=%s",
-                               (data5, value))
+                               (data5, Value))
                 data4 = cursor.fetchone()
                 print(data4)
                 if data4:
@@ -3925,7 +3927,7 @@ def washing1():
         ecowashing = request.form['ecowashing']
         interiorwashing = request.form['interiorwashing']
         cursor = mysql.connection.cursor()
-        cusor.execute("select carname from model")
+        cursor.execute("select carname from model")
         query = "INSERT INTO project.servicewashing (cartype,exteriorwashing,ecowashing,interiorwashing) VALUES (%s,%s,%s,%s)"
         val = (cartype, exteriorwashing, ecowashing, interiorwashing)
         cursor.execute(query, val)
